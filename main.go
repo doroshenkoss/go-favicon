@@ -13,6 +13,10 @@ var googleFavIconURL = "https://www.google.com/s2/favicons?domain="
 
 func main() {
 
+	if len(os.Args) < 2 {
+		log.Fatalln("Please provide site URL")
+	}
+
 	var siteURL string
 
 	if !strings.HasPrefix(os.Args[1], "http") {
@@ -32,7 +36,7 @@ func main() {
 	}
 	defer faviconFile.Close()
 
-	response, err := http.Get(getURL(checkedURL.Host))
+	response, err := http.Get(googleFavIconURL + checkedURL.Host)
 	if err != nil {
 		log.Fatal(err)
 	} else {
@@ -42,8 +46,4 @@ func main() {
 			log.Fatal(err)
 		}
 	}
-}
-
-func getURL(url string) string {
-	return googleFavIconURL + url
 }
